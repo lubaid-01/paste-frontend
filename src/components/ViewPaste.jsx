@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+const API = import.meta.env.VITE_API_URL;
 const ViewPaste = () => {
   const { id } = useParams();
 
@@ -28,7 +29,7 @@ const ViewPaste = () => {
     // If Redux is empty, we must fetch from API
     setLoading(true);
     axios
-      .get(`/api/paste/${id}`, { withCredentials: true })
+      .get(`${API}/paste/${id}`, { withCredentials: true })
       .then((res) => {
         console.log("✅ API Success:", res.data);
         // 3. Update STATE (triggers re-render)

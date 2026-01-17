@@ -7,6 +7,8 @@ import { FormatDate } from "../utlis/formatDate";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+const API = import.meta.env.VITE_API_URL;
+
 const Paste = () => {
   const pastes = useSelector((state) => state.paste.pastes);
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const Paste = () => {
 
   const handleDelete = (id) => {
        axios
-        .delete(`/api/paste/${id}`, { withCredentials: true })
+        .delete(`${API}/paste/${id}`, { withCredentials: true })
         .then((res) => {
           console.log("✅ pastes:", res.data);
           dispatch(removeFromPastes(id));
@@ -35,7 +37,7 @@ useEffect(() => {
     if (pastes.length === 0) {
       console.log("Fetching pastes from API...");
       axios
-        .get("/api/paste/", { withCredentials: true })
+        .get(`${API}/paste/`, { withCredentials: true })
         .then((res) => {
           console.log("✅ pastes:", res.data);
           dispatch(fetchPastes(res.data.pastes));

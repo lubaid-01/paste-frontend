@@ -7,6 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import { use } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 
 const Home = () => {
   const [value, setValue] = useState("");
@@ -34,7 +35,7 @@ const Home = () => {
     if (pasteId) {
       // If pasteId is present, update the paste
     
-      axios.put(`/api/paste/${pasteId}`, paste, { withCredentials: true })
+      axios.put(`${API}/paste/${pasteId}`, paste, { withCredentials: true })
         .then((res) => {
           
           console.log("✅ Paste updated to DB:", res.data);
@@ -47,7 +48,7 @@ const Home = () => {
       
     } else {
       // Update to db
-      axios.post("/api/paste/", paste, { withCredentials: true })
+      axios.post(`${API}/paste/`, paste, { withCredentials: true })
         .then((res) => {
           
           console.log("✅ Paste updated to DB:", res.data);
@@ -91,7 +92,7 @@ useEffect(() => {
     if (pastes.length === 0) {
       console.log("Fetching pastes from API...");
       axios
-        .get("/api/paste/", { withCredentials: true })
+        .get(`${API}/paste/`, { withCredentials: true })
         .then((res) => {
           console.log("✅ pastes:", res.data);
           dispatch(fetchPastes(res.data.pastes));
